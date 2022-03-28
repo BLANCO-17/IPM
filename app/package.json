@@ -1,0 +1,28 @@
+{
+  "name": "ipm",
+  "version": "1.0.0",
+  "description": "Final Sem Project",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BLANCO-17/IPM.git"
+  },
+  "author": "BLANCO-17",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BLANCO-17/IPM/issues"
+  },
+  "homepage": "https://github.com/BLANCO-17/IPM#readme",
+  "devDependencies": {
+    "electron": "^15.0.0"
+  },
+  "dependencies": {
+    "bower": "^1.8.13",
+    "chart.js": "^3.7.0",
+    "electron-acrylic-window": "^0.5.9"
+  }
+}

@@ -1,0 +1,240 @@
+<!-- <!DOCTYPE html> -->
+<html>
+    <head>
+        <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+
+        <link rel="stylesheet" href="home.css">
+        <link rel="stylesheet" href="porto.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://kit.fontawesome.com/bf0bff92a2.js" crossorigin="anonymous"></script>
+        
+        <script src="scripts/ui_handler.js"></script>
+        <script src="scripts/middleware.js"></script>
+        
+        <div class="tbar">
+            <div class="dragbar"></div>
+            <div class="barbtn" id="min_btn">&#10554</div>
+            <div class="barbtn" id="max_btn">&#10064</div>
+            <div class="barbtn closebtn" id="close_btn">&#10005</div>
+        </div>
+    </head>
+
+    <body>
+        <!-- SIDEBAR -->
+        <div class="sidebar" id="sidebar">
+            <div class="tab " id="sidebar_btn">
+                <img class="icon" src="./icons/menu.png" alt="MENU">
+                <span class="text">MENU</span> 
+            </div>
+            <div class="tab " id="dash_btn" onclick="display_Dash()">
+                <img class="icon" src="./icons/home.png" alt="DASHBOARD">
+                <span class="text">DASHBOARD</span> 
+            </div>
+            <div class="tab " id="port_btn" onclick="display_Port()">
+                <img class="icon" src="./icons/trades.png" alt="PORTFOLIO">
+                <span class="text">PORTFOLIO</span> 
+            </div>
+            <div class="tab " id="mang_btn">
+                <img class="icon" src="./icons/port.png" alt="MANAGE">
+                <span class="text">MANAGE</span> 
+            </div>
+            <br>
+        </div>
+        <!-- MAIN-VIEWPORT -->
+        <div class="main-container">            
+            <div class="homepage" id="home_con">
+                
+                <table cellspacing="7px">
+                    <tr class="" style="height: 30%;">
+                        <td class="section charts-row">
+                            <div>
+                                <span class="hi-title">OVERVIEW</span>
+                                <span class="hi-interactor hover-shadow">VIEW ALL</span>
+                            </div><br>
+                            <div class="card-cont">
+                                <div class="chart-card" style="background-color: #058eef;">
+                                    <div class="card-head">
+                                        <img src="./icons/invst.png" class="card-icon" alt="">
+                                        <div>
+                                            <div class="horz">
+                                                <span>INVESTMENT</span>
+                                                <span id="total_invst">$123.45</span>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <canvas class="chart-canv" id="myChart"></canvas>
+                                    <div class="card-btn">View Report</div>
+                                </div>
+                                <div class="chart-card" style="background-color: #39BB86;">
+                                    <div class="card-head">
+                                        <img src="./icons/hodl.png" class="card-icon" alt="">
+                                        <div>
+                                            <div class="horz">
+                                                <span>Net Value</span>
+                                                <span id="net_value">$123.45</span>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <canvas class="chart-canv" id="myChart2"></canvas>
+                                    <div class="card-btn">View Report</div>
+                                </div>
+                                <div class="chart-card" style="background-color: #9D67FE;">
+                                    <div class="card-head">
+                                        <img src="./icons/profit.png" class="card-icon" alt="ICON">
+                                        <div>
+                                            <div class="horz">
+                                                <span>Net Profit</span>
+                                                <span id="net_profit">$123.45</span>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <canvas class="chart-canv" id="myChart3"></canvas>
+                                    <div class="card-btn">View Report</div>
+                                </div>
+                            </div>
+
+                        </td>
+                        <td class="display-col section" rowspan="3">YEET</td>
+                    </tr>
+                    <tr class="" style="height: 45%;">
+                        <td class="section monthly-row ">
+                            <div>
+                                <span class="hi-title">PORTFOLIO SUMMARY</span>
+                                <!-- <span class="hi-interactor hover-shadow">VIEW ALL</span> -->
+                            </div>
+                            <div class="monthly-chart-con">
+                                <canvas class="month-canv"></canvas>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="height: 25%;">
+                        <td class="section holdings-row">TRES - HOLDINGS HERE</td>
+                    </tr>
+    
+                </table>
+
+            </div>
+
+            <div class="portfolio" id="port_con">
+
+                <header class="port-header">
+                    <div class="addItembtn" onclick="toggle_addWindow()">ADD ASSET</div>
+                </header>
+
+                <div class="addWindow" id="addWindow">
+                        <div class="addForm">
+
+                            <div style="padding: 1rem; display: inline-flex; flex-flow: row; align-items: center;">
+                                <label style="width: 35%;">SHARES</label>
+                                <input class="inputfield" type="text" placeholder="Enter Quantity" id="item_qty">
+                            </div>
+                            <div style="padding: 1rem; display: inline-flex; flex-flow: row; align-items: center;">
+                                <label style="width: 35%; white-space:nowrap;">BUY PRICE</label>
+                                <input class="inputfield" type="text" placeholder="Enter Price" id="item_price">
+                            </div>
+
+                            <div style="display: inline-flex; flex-flow:row;">
+                                <select class="ddlist" name="" id="item_select">
+                                    <option class="dditem" value="">Select Item</option>
+                                    <option class="dditem" value="btc">BTC</option>
+                                    <option class="dditem" value="eth">ETH</option>
+                                    <option class="dditem" value="ada">ADA</option>
+                                    <option class="dditem" value="matic">MATIC</option>
+                                    <option class="dditem" value="dot">DOT</option>
+                                    <option class="dditem" value="luna">LUNA</option>
+                                    <option class="dditem" value="xrp">XRP</option>
+                                    <option class="dditem" value="xlm">XLM</option>
+                                    <option class="dditem" value="vet">VET</option>
+                                    <option class="dditem" value="hbar">HBAR</option>
+                                </select>
+
+                                <select class="ddlist" name="" id="cur_select" style="width: 5rem;">
+                                    <option class="dditem" value="">CUR</option>
+                                    <option class="dditem" value="usd">USD</option>
+                                    <option class="dditem" value="inr">INR</option>
+                                    
+                                </select>
+                            </div>
+
+                            <div style="display: inline-flex; flex-flow:row;">
+                                <select class="ddlist" name="" id="month_select" style="width: 5rem;">
+                                    <option class="dditem" value="">Month</option>
+                                    <option class="dditem" value="1">January</option>
+                                    <option class="dditem" value="2">February</option>
+                                    <option class="dditem" value="3">March</option>
+                                    <option class="dditem" value="4">April</option>
+                                    <option class="dditem" value="5">May</option>
+                                    <option class="dditem" value="6">June</option>
+                                    <option class="dditem" value="7">July</option>
+                                    <option class="dditem" value="8">August</option>
+                                    <option class="dditem" value="9">September</option>
+                                    <option class="dditem" value="10">October</option>
+                                    <option class="dditem" value="11">November</option>
+                                    <option class="dditem" value="12">December</option>
+                                </select>
+
+                                <select class="ddlist" name="" id="cur_select" style="width: 5rem;">
+                                    <option class="dditem" value="">Year</option>
+                                    <option class="dditem" value="2015">2015</option>
+                                    <option class="dditem" value="2016">2016</option>
+                                    <option class="dditem" value="2017">2017</option>
+                                    <option class="dditem" value="2018">2018</option>
+                                    <option class="dditem" value="2019">2019</option>
+                                    <option class="dditem" value="2020">2020</option>
+                                    <option class="dditem" value="2021">2021</option>
+                                    <option class="dditem" value="2022">2022</option>                                    
+                                </select>
+                            </div>
+
+                            <div>
+                                <div style="display: inline-flex; flex-flow: row; margin-top: .5rem;">
+                                    <div class="button" onclick="addItemRequest()">ADD</div>
+                                    <div class="button close" onclick="toggle_addWindow()">CLOSE</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                </div>
+
+                <div class="assetContainer" id="assetCon">
+                    <!-- <div class="assetCard">
+                        <div class="card-data">
+                            <div style="display: inline-flex; flex-flow: row;">
+                                <span class="card-data-name">${element.toUpperCase()}</span>
+                                
+                                <span class="card-data-priceChange-perc up" id="${element}_pc">
+                                <i class="fa fa-caret-down" id="${element}_indic"></i>
+                                </span>
+                            </div>
+                            <div style="display: inline-flex; flex-flow: row;">
+                                <span class="card-data-price" id="${element}_price">000</span>
+                                <span class="card-data-priceChange up" id="${element}_pd">-+0</span>                                
+                            </div><br>
+                            <div>
+                                <span class="card-data-share" id="${element}_share">SHARES</span>
+                                : 12345
+                            </div>
+                            <span class="card-data-cost" id="${element}_cost">SPENT :  30,000</span>
+                            <span class="card-data-hodl" id="${element}_hodl">HODL :  25,000</span>
+                            <span class="card-data-gain" id="${element}_net">NET GAIN :  -5000</span>
+                        </div>
+                        <div class="card-logo">
+                            <img class="card-itemlogo" src="https://cryptoicon-api.vercel.app/api/icon/${item}" alt="">
+                        </div>
+                    </div> -->
+                </div>
+                                
+            </div>
+            
+        </div>
+        
+        <script>
+            
+        </script>
+
+    </body>
+
+</html>

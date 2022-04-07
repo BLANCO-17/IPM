@@ -18,11 +18,14 @@
   },
   "homepage": "https://github.com/BLANCO-17/IPM#readme",
   "devDependencies": {
-    "electron": "^15.0.0"
+    "colorthief": "^2.3.2",
+    "electron": "^15.4.2",
+    "svg-gauge": "^1.0.6"
   },
   "dependencies": {
     "bower": "^1.8.13",
     "chart.js": "^3.7.0",
-    "electron-acrylic-window": "^0.5.9"
+    "electron-acrylic-window": "^0.5.9",
+    "jquery": "^3.6.0"
   }
 }

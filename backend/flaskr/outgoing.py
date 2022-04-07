@@ -1,10 +1,11 @@
 from sys import prefix
-from flask import Blueprint, request
+from flask import Blueprint, request, send_file
 from flaskr.tradeHandler import Trades, LoadAssetObject, LoadCryptoObject, LoadTradsObject
 from flaskr.scrapper import priceExtractor
 from datetime import date
 
 _TriggerCDS = False
+price_dict = {}
 
 bp = Blueprint("outgoing", __name__, url_prefix='/fromapp')
 
@@ -61,7 +62,7 @@ def getWatchlist():
     except Exception as e:
         print("error[/getwatchlist] -", e)
         return {"request":"500"}
-    
+
 @bp.route('/getDashboardInfo')
 def getDashboardInfo():
     
@@ -89,7 +90,7 @@ def getDashboardInfo():
     except Exception as e:
         print("error[getDashboardinfo] -", e)
         return {"request": 500}
-        
+
 @bp.route('/getItemDetails')
 def getItemDetails():
     
@@ -130,7 +131,9 @@ def getCardData():
                 x_trades = cryp_obj.getNetCost()
                 price, change = pe.getPrice(item, cur)
                 gain = 0
-                
+
+                price_dict[item+'/'+cur] = price[0]
+
                 for x in x_trades:
                     gain += (price[0]*sh)-x
                     # print(x, price[0])
@@ -170,23 +173,41 @@ def getCardData():
 @bp.route('/getMonthlyData')
 def getMonthlyData():
     
+    item = request.args.get("item")
+
     obj={}
-    try:
-        asset = LoadAssetObject()
-        cryp, trad = asset.getAllItems()
+    asset = LoadAssetObject()
+    
+    if(item == None):
+        try:
+            cryp, trad = asset.getAllItems()
+            
+            for c in cryp:
+                item, cur = c.split('_')
+                cryp_obj = LoadCryptoObject(item, cur)
+                x, y, z = cryp_obj.getMonthData()
+            
+                obj[item+'/'+cur] = {"cost": x,
+                                    "hodl": y,
+                                    "netgain": z}
+        except Exception as e:
+            print("error[/getMonthlyData]", e)
+            return {"request": 500,
+                    "error": e}
+
+    else:
+        cur = request.args.get("cur")
+        tradeObj = LoadCryptoObject(item, cur)
+        # print(tradeObj.getAllTrades())
+        data = tradeObj.getAllTrades()
+        for x in data:
+            data[x]['gain'] = round((float(price_dict[item+'/'+cur]) * float(data[x]['shares'])) - float(data[x]['cost']), 2)
+            
+            # data[x]['hodl'] = price_dict[item+'/'+cur] *  float(data[x]['shares'])
+            # print(data[x])
+            
+        obj[item+'/'+cur] = {"trades": data}
         
-        for c in cryp:
-            item, cur = c.split('_')
-            cryp_obj = LoadCryptoObject(item, cur)
-            x, y, z = cryp_obj.getMonthData()
-        
-            obj[item+'/'+cur] = {"cost": x,
-                                "hodl": y,
-                                "netgain": z}
-    except Exception as e:
-        print("error[/getMonthlyData]", e)
-        return {"request": 500,
-                "error": e}
         
     obj['request'] = 200
     return obj
@@ -213,14 +234,18 @@ def getChartsData():
             item, cur = x.split("_")
             obj = LoadCryptoObject(item, cur)
             
-            cost, hodl, netgain = obj.getMonthData()
+            cost, hodl, netgain = obj.getMonthData()        
             
             for i in range(1, 13):
+                if cur == "inr":
+                    cost[str(i)] = round((cost[str(i)] / 75), 2)
+                    hodl[str(i)] = round((hodl[str(i)] / 75), 2)
+                    netgain[str(i)] = round((netgain[str(i)] /75), 2)
+                    
                 monthly_cost[str(i)] += cost[str(i)]
                 monthly_hodl[str(i)] += hodl[str(i)]
                 monthly_netgain[str(i)] += netgain[str(i)]
                 
-            
             # invst += sum(list(cost.values()))
             # net_hodl += sum(list(hodl.values()))
             # net_gain += sum(list(netgain.values()))
@@ -235,4 +260,36 @@ def getChartsData():
         print("error[/getChartsData] -", e)
         return {"request": 500,
                 "error": e}
+
+@bp.route('/getItemLogo')
+def getItemLogo():
+    
+    item = request.args.get('item')
+    
+    items = {
+        'btc': 'bitcoin',
+        'eth': 'etherium',
+        'ada': 'cardano',
+        'matic': 'polygon',
+        'luna': 'terra',
+        'dot': 'polkadot',
+        'xrp': 'ripple',
+        'xlm': 'stellar',
+        'vet': 'vechain',
+        'hbar': 'hbar'
+    }
+    
+    try:
+        path = r"D:\\Development Environment\\IPM\\backend\\icons\\"+items[item]+"_f.png"
+        return send_file(path, mimetype='image/png')
+    except:
+        path = r"D:\\Development Environment\\IPM\\backend\\icons\\"+"crypto_f.png"
+        return send_file(path, mimetype='image/png')
+        # return {"error": "file not found"}
+    
+
+# @bp.route("/getTradeTable")
+# def getTradeTable():
+    
+#     item = request.args.get('item')
     

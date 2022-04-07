@@ -119,21 +119,47 @@ class priceExtractor:
             if(abv != None):
                         
                 # print(data.tbody.tr.td.text)
-                try:
-                    self.driver.get('https://wazirx.com/exchange/'+coinname+'-INR') # Getting page HTML through request                
-                    self.soup = BeautifulSoup(self.driver.page_source, 'html.parser') # Parsing content using beautifulsoup. Notice driver.page_source instead of page.content
-                    data = self.soup.find("table", {"class": "trade-history"}) # Selecting priceValue Class object
-                    # data = data.tbody.tr.td.text
-                    repPrice = data.tbody.tr.td.text#(data.string).replace(" INR", "")
-                    
+                price_change['diff'] = 0
+                price_change['indic'] = '+'
+                price_change['percentage'] = 0.0
+                price = 0
+                repPrice = 0
+                
+                self.driver.get('https://wazirx.com/exchange/'+coinname+'-INR') # Getting page HTML through request                
+                self.soup = BeautifulSoup(self.driver.page_source, 'html.parser') # Parsing content using beautifulsoup. Notice driver.page_source instead of page.content
+                data = self.soup.find("table", {"class": "trade-history"}) # Selecting priceValue Class object
+                i=0
+                while(i < 5):
                     try:
-                        price = repPrice.replace(",", "")                    
-                        price = float(price)
-                    except: pass
-                    
-                except Exception as e:
-                    print("retrieval error :",e)
-                    price = 0
+                        # data = data.tbody.tr.td.text
+                        repPrice = data.tbody.tr.td.text#(data.string).replace(" INR", "")
+                        tick = self.soup.find(id="ticker-"+coinname.lower())            
+                        obj = tick.findChildren("div", {"class", "market-change"})
+                        # print("ticker-"+coinname)
+                        ob = obj[0].findChildren("span")
+                        
+                        perc = (ob[0].text[1:len(ob[0].text)-1]).replace("%", "")
+                        if '-' in perc:
+                            price_change['indic'] = '-'
+                            perc = perc.replace('-', '')
+                        else:
+                            price_change['indic'] = '+'
+                            
+                        price_change['percentage'] = perc.replace(" ", '')                                        
+                        # for span in ob:
+                        #     print(span.text)
+                        try:
+                            price = repPrice.replace(",", "")                    
+                            price = float(price)
+                            open_price = (price / (100-float(price_change['percentage']) ))*100
+                            price_change['diff'] = round(open_price-price, 2)
+                            
+                        except Exception as e: print("Calc Error - ", e)
+                        
+                        break
+                    except Exception as e:
+                        print("retrieval error :",e)
+                        i+=1
                     
             else:
                 print("[ERROR] - Item not yet supported. Take a look at the 'getName' function of this class.")
@@ -144,7 +170,10 @@ class priceExtractor:
             repPrice = repPrice[:i+3]
             return [round(price, 2), repPrice], price_change
         else: return price, repPrice
-            
+                
+    def getFNGIndex():
+        pass
+
     def closeDriver(self):
         #always call this function before closing your main script, responsible for flushing the webdriver.exe
         self.driver.quit()

@@ -5,7 +5,23 @@
     width: 0%;
     opacity: 0;
     visibility: hidden;
+
+    /*Fallback if gradeints don't work */    
+    
+    /* background: linear-gradient(-90deg, #b39bf6, #fecaa9);
+	background-size: 175% 175%;
+	animation: gradient 2.5s ease infinite; */
 }
+
+.radial-gradient{
+    background: #9b59b6;
+    /*Linear gradient... */
+    background: 
+        radial-gradient(
+        at center, #3498db, #9b59b6
+        );
+}
+
 
 .portfolio.active{
     transition: ease-in-out 0.15s;
@@ -49,60 +65,77 @@
     gap: 1rem 1rem;
     padding: 2rem;
     width: 100%;
-    height: 85%;
-    /* background-color: #e3e3ec; */
-    /* background: linear-gradient(45deg, rgb(101, 233, 119) 0%, rgba(4,187,255,1) 100%); */
-
-    /* background: linear-gradient(45deg, rgba(255,112,175,1) 0%, rgba(95,72,245,1) 100%); */
-    /* background: linear-gradient(45deg, rgba(207,145,255,1) 0%, rgba(87,130,245,1) 100%); */
-    /* background: linear-gradient(45deg, rgba(136,247,249,1) 0%, rgba(4,143,255,1) 100%); */
-    /* align-items: center; */
-    /* justify-content: center; */
+    height: 85%;    
 }
 
 .assetCard{
-    width: 550px;
-    height: 250px;
+    width: 540px;
+    height: 230px;
     border-radius: 10px;
     display: flex;
     backdrop-filter: blur(13px) saturate(180%);
     -webkit-backdrop-filter: blur(13px) saturate(180%);
-    background-color: rgba(31, 28, 26, 0.486);
-    /* border: 1px solid rgba(255, 255, 255, 0.125); */
-    box-shadow: #3c40434d 0px 1px 2px 0px, #3c404326 0px 1px 3px 1px;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     transition: ease-in-out .25s;
     padding: .5rem;
     color: white;
 }
-.assetCard:hover{
-    background-color: rgba(65, 63, 61, 0.514);
+.assetCard:hover{    
+    /* background-color: rgba(231, 246, 255, 0.979); */
+    filter: saturate(100%);
     transition: ease-in-out .25s;
-    /* border: 2px solid rgba(255, 255, 255, 0.219); */
-    /* box-shadow: 2px 1px 25px 8px rgba(0,0,0,0.39); */
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    
+
+}
+
+.assetCard .delbtn{
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    padding: 1rem;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    transition: ease-in-out .25s;
+    border-radius: 45px;
+    border-color: none;    
+     
+}
+
+.delbtn:hover{
+    background-color: rgb(233, 102, 55);
+    transition: ease-in-out .25s;
+}
+
+.delbtn:focus{
+    border-color: white;
 }
 
 .card-logo{
     float: right;
-    width: 25%;
-    /* background-color: aquamarine; */
+    width: 33%;
+    display: block;
+    /* background-color: #3e4446; */
 }
 
 .card-data{
     display: inline-flex;
-    /* float: right; */
     flex-flow: column;
-    /* background-color: rgb(177, 87, 196); */
-    width: 75%;
+    width: 66%;
 }
 
 .card-data-name{
-    font-size: 200%;    
+    font-size: 150%;    
     min-width: 150px;
 }
 .card-data-price{
     font-size: 175%;    
     min-width: 150px;
+    text-shadow: none;
 }
 
 .card-data-priceChange, .card-data-priceChange-perc{
@@ -110,6 +143,8 @@
     font-size: 115%;
     border-radius: 7px;
     margin-left: .15rem;
+    min-width: fit-content;
+    white-space: nowrap;
 }
 .up, .down{
     padding: .1rem;
@@ -129,6 +164,9 @@
     max-width: 150px;
     margin-right: 20px;
     display: inline-flex;
+    text-shadow: none;
+    transition: ease-in-out .5s;
+    white-space: nowrap;    
     /* white-space: pre; */    
 }
 
@@ -158,16 +196,17 @@
     background-image: url('./icons/down.png');
 }
 .card-itemlogo{
-    max-width: 100%;
-    width: 75px;
-    height: 75px;
+    /* max-width: 100%; */
+    width: 192px;
+    height: 192px;
 }
 
-.assetCard:hover .card-indic-up, .card-indic-down{
+/* .assetCard:hover .up, .down{
     filter: saturate(4);
-}
-.card-data-name, .card-data-cost, .card-data-gain, .card-data-hodl, .card-data-price, .card-data-share, .card-data-priceChange, .card-data-priceChange-perc{    
+} */
+.assetCard:hover .card-data-name, .card-data-cost, .card-data-gain, .card-data-hodl, .card-data-price, .card-data-share, .card-data-priceChange, .card-data-priceChange-perc{    
     text-shadow: 2px 5px 5px rgba(0,0,0,0.3), 0px -2px 10px rgba(255,255,255,0.3);
+    transition: ease-in-out .25s;
     /* color: white; */
 }
 
@@ -232,7 +271,7 @@
     border-width: 0px;
     background-color:rgba(61, 61, 61, 0.836);   
     margin: .15rem;
-    
+    color: white;
     border-top: inline #3e4446;
     border-right: inline #3e4446;
     border-bottom: inline #3e4446;
@@ -249,6 +288,7 @@
 .dditem{    
     cursor: pointer;
     padding: .25rem;
+    color: white;
 }
 .dditem:hover{
     background-color: rgb(46, 104, 180);    
@@ -304,12 +344,20 @@
     outline: none !important;
 }
 
-@media screen and (min-width : 500px) {
+@media screen and (min-width : 876px) {
     .assetCard{
         width: 95%;
     }
     .card-itemlogo{
-        width: 100px;
-        height: 100px;
+        display: block;
+        justify-content: center;
+        align-items: center;
+        max-height: 128px;
+        max-width: 128px;   
+    }
+    .card-logo{
+        display: block;
+        width: 30%;
+        
     }
 }

@@ -7,17 +7,22 @@
 
         <link rel="stylesheet" href="home.css">
         <link rel="stylesheet" href="porto.css">
+        <link rel="stylesheet" href="manage.css">
+
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://kit.fontawesome.com/bf0bff92a2.js" crossorigin="anonymous"></script>
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
+        <script src="scripts/svg-gauge-master/dist/gauge.min.js"></script>
+        <script src="./node_modules/jquery/dist/jquery.slim.min.js"></script>
+
         <script src="scripts/ui_handler.js"></script>
         <script src="scripts/middleware.js"></script>
         
         <div class="tbar">
             <div class="dragbar"></div>
             <div class="barbtn" id="min_btn">&#10554</div>
-            <div class="barbtn" id="max_btn">&#10064</div>
-            <div class="barbtn closebtn" id="close_btn">&#10005</div>
+            <div class="barbtn" style="border-radius: 0px;" id="max_btn">&#10064</div>
+            <div class="barbtn closebtn" style="border-radius: 0px;" id="close_btn">&#10005</div>
         </div>
     </head>
 
@@ -36,7 +41,7 @@
                 <img class="icon" src="./icons/trades.png" alt="PORTFOLIO">
                 <span class="text">PORTFOLIO</span> 
             </div>
-            <div class="tab " id="mang_btn">
+            <div class="tab " id="trad_btn" onclick="display_Trades()">
                 <img class="icon" src="./icons/port.png" alt="MANAGE">
                 <span class="text">MANAGE</span> 
             </div>
@@ -44,10 +49,10 @@
         </div>
         <!-- MAIN-VIEWPORT -->
         <div class="main-container">            
-            <div class="homepage" id="home_con">
+            <div class="homepage" id="home_con" >
                 
-                <table cellspacing="7px">
-                    <tr class="" style="height: 30%;">
+                <table cellspacing="2px" >
+                    <tr class="" style="height: 30%; overflow-y:scroll;">
                         <td class="section charts-row">
                             <div>
                                 <span class="hi-title">OVERVIEW</span>
@@ -94,30 +99,78 @@
                                     <div class="card-btn">View Report</div>
                                 </div>
                             </div>
-
+<!-- chart -->
                         </td>
-                        <td class="display-col section" rowspan="3">YEET</td>
-                    </tr>
-                    <tr class="" style="height: 45%;">
-                        <td class="section monthly-row ">
-                            <div>
-                                <span class="hi-title">PORTFOLIO SUMMARY</span>
-                                <!-- <span class="hi-interactor hover-shadow">VIEW ALL</span> -->
+                        <td class="display-col section" style="border-radius: 10px; background-color:#00ffff9f; 
+                        align-items: flex-start;" rowspan="3">
+<!-- blyaat -->
+                            <div class="fng">
+                                <div style="width: 100%; height:40vh; display: inline-flex; flex-flow: column; align-items:center; justify-content:center;">
+                                    <span class="hide" style="color: rgb(255, 255, 255); font-size: 1.5vw; font-weight: bold;">FEAR AND GREED INDEX</span>
+                                    <div id="gauge" class="gauge-container two" style="width: 100%; height: 250px;"></div>
+                                    <span id="gauge_classification" class="val_class"></span>
+                                    <span class="hide" style="color: rgb(255, 255, 255); font-size: 1.5vw; font-weight: bold;">MARKET SENTIMENT</span>
+                                </div>
                             </div>
-                            <div class="monthly-chart-con">
-                                <canvas class="month-canv"></canvas>
+                            <div style="padding-top: 10vh; width: 100%; height: 30vh; display:inline-flex; align-items: center; flex-flow:column;">
+                                <div class="perf_div">
+                                    <span>BEST PERFORMING</span>
+                                </div>
+                                <div class="perf_div">
+                                    <span>WORST PERFORMING</span>
+                                </div>
+                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="">
+                        <td class="section monthly-row ">
+                            <div style="max-height: 35%;">
+                                <div>
+                                    <span class="hi-title">PORTFOLIO SUMMARY</span>
+                                    <!-- <span class="hi-interactor hover-shadow">VIEW ALL</span> -->
+                                </div>
+                                <div class="monthly-chart-con">
+                                    <canvas class="month-canv" id="myChart4"></canvas>
+                                </div>
+
                             </div>
                         </td>
                     </tr>
                     <tr style="height: 25%;">
-                        <td class="section holdings-row">TRES - HOLDINGS HERE</td>
+                        <td class="section holdings-row">                            
+                            <div class="items">
+                                <div class="item active">
+                                    <img src="http://127.0.0.1:5000/fromapp/getItemLogo?item=btc">
+                                    <div class="details">
+
+                                    </div>
+                                </div>
+                                <div class=" item next">
+                                    <img src="http://via.placeholder.com/500x500">
+                                </div>
+                                <div class="item">
+                                    <img src="http://via.placeholder.com/500x500">
+                                </div>
+                                <div class="item">
+                                    <img src="http://via.placeholder.com/500x500">
+                                </div>
+                                <div class="item prev">
+                                    <img src="http://via.placeholder.com/500x500">
+                                </div>
+                                <div class="button-container">
+                                    <div class="button"><i class="fas fa-angle-left"></i></div>
+                                    <div class="button"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
     
                 </table>
 
             </div>
 
-            <div class="portfolio" id="port_con">
+            <div class="portfolio radial-gradient" id="port_con">
 
                 <header class="port-header">
                     <div class="addItembtn" onclick="toggle_addWindow()">ADD ASSET</div>
@@ -127,18 +180,18 @@
                         <div class="addForm">
 
                             <div style="padding: 1rem; display: inline-flex; flex-flow: row; align-items: center;">
-                                <label style="width: 35%;">SHARES</label>
+                                <label style="color: white; width: 35%;">SHARES</label>
                                 <input class="inputfield" type="text" placeholder="Enter Quantity" id="item_qty">
                             </div>
                             <div style="padding: 1rem; display: inline-flex; flex-flow: row; align-items: center;">
-                                <label style="width: 35%; white-space:nowrap;">BUY PRICE</label>
+                                <label style="color: white; width: 35%; white-space:nowrap;">BUY PRICE</label>
                                 <input class="inputfield" type="text" placeholder="Enter Price" id="item_price">
                             </div>
 
                             <div style="display: inline-flex; flex-flow:row;">
                                 <select class="ddlist" name="" id="item_select">
                                     <option class="dditem" value="">Select Item</option>
-                                    <option class="dditem" value="btc">BTC</option>
+                                    <option class="dditem" value="btc" label="bitcoin">BTC</option>
                                     <option class="dditem" value="eth">ETH</option>
                                     <option class="dditem" value="ada">ADA</option>
                                     <option class="dditem" value="matic">MATIC</option>
@@ -175,7 +228,7 @@
                                     <option class="dditem" value="12">December</option>
                                 </select>
 
-                                <select class="ddlist" name="" id="cur_select" style="width: 5rem;">
+                                <select class="ddlist" disabled="disabled" name="" id="cur_select" style="width: 5rem;">
                                     <option class="dditem" value="">Year</option>
                                     <option class="dditem" value="2015">2015</option>
                                     <option class="dditem" value="2016">2016</option>
@@ -228,10 +281,115 @@
                 </div>
                                 
             </div>
+
+            <div class="manage" id="trad_con">
+                <div class="manage_con grads" id="table_div">
+                    <table >
+                        <tbody>
+                            <tr>
+                                <td class="data_con">
+                                    <div style="width: 100%; display: flex; align-items:center; justify-content: center;">
+                                        <H1 id="report_heading">ITEM REPORT</H1>
+                                    </div>
+                                    <div style="border-bottom: solid black 1px; display:flex; align-items: center; justify-content: center;">
+                                        <table class="t-container" id="month_table">
+                                            <thead>
+                                                <tr>
+                                                    <th><h1>Month</h1></th>
+                                                    <th><h1>Invested</h1></th>
+                                                    <th><h1>Net Returns</h1></th>
+                                                    <th><h1>Hodl Value</h1></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div style="width: 100%; display: flex; align-items:center; justify-content: center;">
+                                        <H1>TRADE REPORT</H1>
+                                    </div>
+                                    <div style="padding-top: 5rem; display:flex; align-items: center; justify-content: center;">
+                                        <table class="t-container" id="trade_table">
+                                            <thead>
+                                                <tr>
+                                                    <th><h1>Trade No</h1></th>
+                                                    <th><h1>Invested</h1></th>
+                                                    <th><h1>Net Returns</h1></th>
+                                                    <th><h1>Hodl Value</h1></th>
+                                                    <th><h1>Month</h1></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody >                                               
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+
+                                <td class="item_con" id="m_item_con">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
             
-        </div>
+        </div>        
         
         <script>
+
+            var $ = jQuery = require("jquery");
+            
+            $(document).mousemove(function(event) {
+                windowWidth = $(window).width();
+                windowHeight = $(window).height();
+                
+                mouseXpercentage = Math.round(event.pageX / windowWidth * 100);
+                mouseYpercentage = Math.round(event.pageY / windowHeight * 100);
+                
+                $('.radial-gradient').css('background', 'radial-gradient(at ' + mouseXpercentage + '% ' + mouseYpercentage + '%, #3498db, #9b59b6)');       
+              });
+
+              const slider = document.querySelector(".items");
+		const slides = document.querySelectorAll(".item");
+		const button = document.querySelectorAll(".button");
+
+		let current = 0;
+		let prev = 4;
+		let next = 1;
+
+		for (let i = 0; i < button.length; i++) {
+			button[i].addEventListener("click", () => i == 0 ? gotoPrev() : gotoNext());
+		}
+
+		const gotoPrev = () => current > 0 ? gotoNum(current - 1) : gotoNum(slides.length - 1);
+
+		const gotoNext = () => current < 4 ? gotoNum(current + 1) : gotoNum(0);
+
+		const gotoNum = number => {
+			current = number;
+			prev = current - 1;
+			next = current + 1;
+
+			for (let i = 0; i < slides.length; i++) {
+				slides[i].classList.remove("active");
+				slides[i].classList.remove("prev");
+				slides[i].classList.remove("next");
+			}
+
+			if (next == 5) {
+				next = 0;
+			}
+
+			if (prev == -1) {
+				prev = 4;
+			}
+
+			slides[current].classList.add("active");
+			slides[prev].classList.add("prev");
+			slides[next].classList.add("next");
+		}
             
         </script>
 

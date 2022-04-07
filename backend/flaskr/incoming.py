@@ -51,7 +51,8 @@ def addTradeItem():
                 "output": output}
 
     except Exception as e:
-        return {"output": "error - "+e}
+        print(e)
+        return {"output": "error - "+str(e)}
 
 @bp.route('/addWatchlistItem')
 def addItemWL():

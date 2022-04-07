@@ -3,11 +3,10 @@ const  {BrowserWindow } = require('electron-acrylic-window')
 
 function createWindow() {
     const win = new BrowserWindow({
-        minWidth: 600,
-        minHeight: 500,
+        minWidth: 1280,
+        minHeight: 720,
         title: "IPM",
-        frame: false,
-        transparent: true,
+        frame: false,        
         webPreferences: {nodeIntegration: true,  enableRemoteModule: true, contextIsolation: false}
     });
 
@@ -16,7 +15,7 @@ function createWindow() {
     win.webContents.openDevTools();
 
     op = {
-        theme: 'dark',
+        theme: 'light',
         effect: 'blur',
         useCustomWindowRefreshMethod: true,
         maximumRefreshRate: 60,

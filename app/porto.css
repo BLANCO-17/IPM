@@ -130,11 +130,13 @@
 
 .card-data-name{
     font-size: 150%;    
+    color: white;
     min-width: 150px;
 }
 .card-data-price{
     font-size: 175%;    
     min-width: 150px;
+    color: white;
     text-shadow: none;
 }
 
@@ -150,9 +152,10 @@
     padding: .1rem;
     display: flex;
     align-items: center;
+    
 }
 .up{
-    background-color: #088f47
+    background-color: #409f6d
 }
 .down{
     background-color: #da3c28ef;
@@ -167,6 +170,7 @@
     text-shadow: none;
     transition: ease-in-out .5s;
     white-space: nowrap;    
+    color: white;
     /* white-space: pre; */    
 }
 

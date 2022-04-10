@@ -120,18 +120,30 @@ def getCardData():
     
         crypto = {}    
 
+        pe = priceExtractor()
         try:
-            pe = priceExtractor()
             asset = LoadAssetObject()
             cryp, trad = asset.getAllItems()
+            
             for c in cryp:
                 item, cur = c.split('_')
                 cryp_obj = LoadCryptoObject(item, cur)
                 sh, cost = cryp_obj.getTotalDetails()
                 x_trades = cryp_obj.getNetCost()
                 price, change = pe.getPrice(item, cur)
-                gain = 0
 
+                if(price == None):
+                    crypto[item+'/'+cur] = {"shares": sh, 
+                                        "cost": cost,
+                                        "netgain": 0,
+                                        "prices": [0,0],
+                                        "change": 0}
+                    continue
+                
+                    # price=[0, 0]
+                    # change=0
+                    # print(c)
+                gain = 0
                 price_dict[item+'/'+cur] = price[0]
 
                 for x in x_trades:

@@ -299,9 +299,10 @@ table{
     height: 30%;
     width: 95%;
     background-color: #ffffff;
+    /* border-bottom: solid #007FFF 2px; */
 }
 .month-canv{
-    height: 20%;
+    height: 15%;
     /* max-height: 90%; */
     /* min-width: 90%;
     max-width: 90%; */
@@ -420,7 +421,8 @@ table{
     height: 100%;
     transform: translate(-50%, -50%);
     user-select: none;
-    /* background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%); */
+    background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
+    border-radius: 10px;
     /* background: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);     */
     /* animation: gradient 10s ease infinite; */
     /* background-size: 200% 200%; */
@@ -445,20 +447,42 @@ table{
 
 .item img {
     width: 100%;
-    height: 100%;
+    height: 95%;
     object-fit: cover;
     /* overflow: visible; */
 }
 .item .details{
     position: absolute;
     /* top: 10; */
-    right: -250%;
-    width: 250px;
-    height: 80%;
-    background: linear-gradient(45deg,
+    right: -275%;
+    width: 400px;
+    max-width: fit-content;
+    height: fit-content;
+    /* background: linear-gradient(45deg,
     #A1C4FD 0%,
-    #C2E9FB 100%);
+    #C2E9FB 100%); */
     z-index: 100;
+    display: inline-flex;
+    flex-flow: row;
+    justify-content: center;
+    padding: 1rem;
+    white-space: nowrap;
+}
+
+.details .content{
+    font-size: 1.75rem;
+    margin: 1rem;
+    color: white;
+    padding: .5rem;
+    border-radius: 5px;
+}
+
+.details .perc-change{
+    /* font-weight: bold; */
+    font-size: 100%;
+    border-radius: 7px;    
+    min-width: fit-content;
+    white-space: nowrap;
 }
 
 .item.active {
@@ -509,7 +533,7 @@ table{
     transform: translate(-50%, -50%);
     width: 50px;
     height: 50px;
-    background-color: rgba(237, 116, 30, 0.751);
+    background-color: rgb(255, 255, 255);
     border-radius: 50%;
     z-index: -99;
 }

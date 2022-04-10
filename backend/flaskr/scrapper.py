@@ -4,12 +4,13 @@
 #Refer to the getName() function to see default supported coins, feel free to add coins of your choice.
 #Make sure to Update the webdriver path in __INIT_
 
+from asyncio.windows_events import NULL
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import chromedriver_autoinstaller
 
 # from selenium.webdriver.chrome.service import Service
-# from time import sleep
+from time import sleep
 
 class priceExtractor:
     
@@ -66,7 +67,7 @@ class priceExtractor:
         name_dict['ckb'] = 'nervos-network'
 
         return name_dict.get(abv)
-            
+    
     def getPrice(self, coinname, cur):
 
         abv = self.getName(coinname)
@@ -125,12 +126,12 @@ class priceExtractor:
                 price = 0
                 repPrice = 0
                 
-                self.driver.get('https://wazirx.com/exchange/'+coinname+'-INR') # Getting page HTML through request                
-                self.soup = BeautifulSoup(self.driver.page_source, 'html.parser') # Parsing content using beautifulsoup. Notice driver.page_source instead of page.content
-                data = self.soup.find("table", {"class": "trade-history"}) # Selecting priceValue Class object
                 i=0
                 while(i < 5):
                     try:
+                        self.driver.get('https://wazirx.com/exchange/'+coinname+'-INR') # Getting page HTML through request                
+                        self.soup = BeautifulSoup(self.driver.page_source, 'html.parser') # Parsing content using beautifulsoup. Notice driver.page_source instead of page.content
+                        data = self.soup.find("table", {"class": "trade-history"}) # Selecting priceValue Class object
                         # data = data.tbody.tr.td.text
                         repPrice = data.tbody.tr.td.text#(data.string).replace(" INR", "")
                         tick = self.soup.find(id="ticker-"+coinname.lower())            
@@ -146,8 +147,7 @@ class priceExtractor:
                             price_change['indic'] = '+'
                             
                         price_change['percentage'] = perc.replace(" ", '')                                        
-                        # for span in ob:
-                        #     print(span.text)
+                        
                         try:
                             price = repPrice.replace(",", "")                    
                             price = float(price)
@@ -158,21 +158,20 @@ class priceExtractor:
                         
                         break
                     except Exception as e:
-                        print("retrieval error :",e)
+                        print("Data Retrieval error :",e)
                         i+=1
+                        sleep(0.5)
                     
             else:
                 print("[ERROR] - Item not yet supported. Take a look at the 'getName' function of this class.")
                 price = 0                
                 
-        if price > 1:
+        if price != 0:
             i = repPrice.index('.')
             repPrice = repPrice[:i+3]
             return [round(price, 2), repPrice], price_change
-        else: return price, repPrice
-                
-    def getFNGIndex():
-        pass
+        else: return None, None
+    
 
     def closeDriver(self):
         #always call this function before closing your main script, responsible for flushing the webdriver.exe

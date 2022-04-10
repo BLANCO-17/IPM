@@ -12,11 +12,11 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://kit.fontawesome.com/bf0bff92a2.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
-        <script src="scripts/svg-gauge-master/dist/gauge.min.js"></script>
+        <!-- <script src="scripts/svg-gauge-master/dist/gauge.min.js"></script> -->
         <script src="./node_modules/jquery/dist/jquery.slim.min.js"></script>
 
-        <script src="scripts/ui_handler.js"></script>
-        <script src="scripts/middleware.js"></script>
+        <script src="scripts_ui/ui_handler.js"></script>
+        <script src="scripts_ui/middleware.js"></script>
         
         <div class="tbar">
             <div class="dragbar"></div>
@@ -139,11 +139,13 @@
                     </tr>
                     <tr style="height: 25%;">
                         <td class="section holdings-row">                            
-                            <div class="items">
-                                <div class="item active">
+                            <div class="items" id="items_shorts">
+                                <!-- <div class="item active" id="element_short">
                                     <img src="http://127.0.0.1:5000/fromapp/getItemLogo?item=btc">
                                     <div class="details">
-
+                                        <span class="content" id="element_short_price">123456</span>
+                                        <span class="content" id="element_short_change">-4500</span>
+                                        <span class="content" id="element_short_pc-change">2.5%</span>
                                     </div>
                                 </div>
                                 <div class=" item next">
@@ -157,7 +159,7 @@
                                 </div>
                                 <div class="item prev">
                                     <img src="http://via.placeholder.com/500x500">
-                                </div>
+                                </div> -->
                                 <div class="button-container">
                                     <div class="button"><i class="fas fa-angle-left"></i></div>
                                     <div class="button"><i class="fas fa-angle-right"></i></div>
@@ -351,46 +353,7 @@
                 $('.radial-gradient').css('background', 'radial-gradient(at ' + mouseXpercentage + '% ' + mouseYpercentage + '%, #3498db, #9b59b6)');       
               });
 
-              const slider = document.querySelector(".items");
-		const slides = document.querySelectorAll(".item");
-		const button = document.querySelectorAll(".button");
-
-		let current = 0;
-		let prev = 4;
-		let next = 1;
-
-		for (let i = 0; i < button.length; i++) {
-			button[i].addEventListener("click", () => i == 0 ? gotoPrev() : gotoNext());
-		}
-
-		const gotoPrev = () => current > 0 ? gotoNum(current - 1) : gotoNum(slides.length - 1);
-
-		const gotoNext = () => current < 4 ? gotoNum(current + 1) : gotoNum(0);
-
-		const gotoNum = number => {
-			current = number;
-			prev = current - 1;
-			next = current + 1;
-
-			for (let i = 0; i < slides.length; i++) {
-				slides[i].classList.remove("active");
-				slides[i].classList.remove("prev");
-				slides[i].classList.remove("next");
-			}
-
-			if (next == 5) {
-				next = 0;
-			}
-
-			if (prev == -1) {
-				prev = 4;
-			}
-
-			slides[current].classList.add("active");
-			slides[prev].classList.add("prev");
-			slides[next].classList.add("next");
-		}
-            
+             
         </script>
 
     </body>

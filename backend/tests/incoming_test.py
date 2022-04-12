@@ -35,3 +35,8 @@ def test_addTradeItem_fail(client):
     data = json.loads(rec.data)
     assert data['request'] == "failed"
             
+
+def test_setMonthData_success(client):
+    rec = client.get('/toapp/setMonthData?item=btc&cur=usd&cost=20000&investment=0.1&type=cryp&month=1&netgain=10&hodl=10&testing=on')
+    data = json.loads(rec.data)
+    assert data['request'] == 200

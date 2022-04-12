@@ -22,8 +22,8 @@ def addTradeItem():
         month = int(request.args.get('month'))
         testing = request.args.get('testing')
 
-        if type != "cryp" and type != "trad": return {"request": "failed", "error":"invalid Item type"}
-        if month < 1 or month > 12: return {"request": "failed", "error": "Invalid month var value"}
+        if type != "cryp" and type != "trad": return {"request": 500, "error":"invalid Item type"}
+        if month < 1 or month > 12: return {"request": 500, "error": "Invalid month var value"}
         
         tradeObj = None
         output = "null"
@@ -52,43 +52,44 @@ def addTradeItem():
 
     except Exception as e:
         print(e)
-        return {"output": "error - "+str(e)}
+        return {"request": 500,
+            "output": "error - "+str(e)}
 
-@bp.route('/addWatchlistItem')
-def addItemWL():
+# @bp.route('/addWatchlistItem')
+# def addItemWL():
 
-    asset = LoadAssetObject()
-    item = request.args.get('item')
-    cur = request.args.get('cur')
-    testing = request.args.get('testing')
+#     asset = LoadAssetObject()
+#     item = request.args.get('item')
+#     cur = request.args.get('cur')
+#     testing = request.args.get('testing')
     
-    out = asset.addItemWL(item, cur)
+#     out = asset.addItemWL(item, cur)
     
-    if testing != "on":
-        asset.SaveObject()
+#     if testing != "on":
+#         asset.SaveObject()
     
-    return out
+#     return out
 
-@bp.route('/delItem')
-def delItemWL():
+# @bp.route('/delItem')
+# def delItemWL():
     
-    try:
+#     try:
         
-        asset = LoadAssetObject()
-        item = request.args.get('item')
-        cur = request.args.get('cur')
-        testing = request.args.get('testing')
+#         asset = LoadAssetObject()
+#         item = request.args.get('item')
+#         cur = request.args.get('cur')
+#         testing = request.args.get('testing')
         
-        out = asset.delItemWL(item, cur)
+#         out = asset.delItemWL(item, cur)
         
-        if testing != "on":
-            asset.SaveObject()
+#         if testing != "on":
+#             asset.SaveObject()
         
-        return{"request": 200,
-               "output": out}
-    except Exception as e:
-        return{"request": 500,
-               "error": e}
+#         return{"request": 200,
+#                "output": out}
+#     except Exception as e:
+#         return{"request": 500,
+#                "error": e}
 
 @bp.route('/setMonthData')
 def setMonthData():

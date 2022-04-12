@@ -396,6 +396,8 @@ table{
 }
 
 .perf_div{
+    display: inline-flex;
+    flex-flow: row;
     width: 90%;
     height: 100px;
     margin: .15rem;
@@ -403,15 +405,44 @@ table{
     border-radius: 10px;
     background: linear-gradient(127deg, #045DE9 0%, #09C6F9 100%);
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    padding: 0.5rem;
+    padding: 0.5rem;    
+    transition: ease-in-out .25s;
+
     /* border: solid white 1px; */
     /* background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%); */
     /* animation: gradient 10s ease infinite; */
     /* background-size: 200% 200%; */
 }
 
-.perf_div > span{
+.green:hover{
+    box-shadow:
+    0 0 10px 10px rgba(157, 243, 145, 0.3),  /* inner white */
+    0 0 10px 10px rgba(166, 228, 135, 0.3), /* middle magenta */
+    0 0 10px 10px rgba(118, 234, 105, 0.3); /* outer cyan */
+    transition: ease-in-out .25s;
+}
+
+.red:hover{
+    box-shadow:
+    0 0 10px 10px rgba(243, 145, 145, 0.3),  /* inner white */
+    0 0 10px 10px rgba(191, 72, 72, 0.3), /* middle magenta */
+    0 0 10px 10px rgba(238, 31, 31, 0.418); /* outer cyan */
+    transition: ease-in-out .25s;
+}
+
+.perf_div > div > span{
     color: white;
+    margin: 0.15rem
+}
+
+.perf_div .perf_data{
+    padding: 0.15rem;
+    width: 80%;
+    float: left;
+    white-space:nowrap;
+    font-size:small;
+    display:inline-flex;
+    flex-flow: column;
 }
 
 .items {

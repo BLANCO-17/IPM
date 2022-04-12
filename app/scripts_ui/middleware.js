@@ -539,14 +539,25 @@ function refreshCardsData(){
         total_invst = 0.0;
         total_net_gain = 0.0;
         total_net_value = 0.0;
-        
+        var max = {'item': "", "netgain": 0}
+        var min = {'item': "", "netgain": 0}
         ItemList.crypto.forEach( (item) => {
-            
+                        
             if(!document.getElementById(item.replace('_', '/')+'_card')){
                 createCards([item]);
             }
             let element = item.replace('_', '/');
             let hodl = Number((Itemdata[element].prices[0]*Itemdata[element].shares).toFixed(2));
+
+            
+            let ngp = ((hodl-Itemdata[element].cost)/Itemdata[element].cost)*100
+            if(ngp > max.netgain){
+                max.item = item.split('_', 1);
+                max.netgain = ngp//Itemdata[element].netgain;
+            }else if(ngp <= min.netgain){
+                min.item = item.split('_', 1);
+                min.netgain = ngp//Itemdata[element].netgain;
+            }
             
             total_invst += Itemdata[element].cost;
             total_net_gain += Itemdata[element].netgain;
@@ -597,6 +608,15 @@ function refreshCardsData(){
             
             
         })
+        // console.log(max, min);
+        
+        document.getElementById('bp_item').textContent = max.item.toString().toUpperCase();
+        document.getElementById('bp_return').textContent = 'NET RETURN : ' + max.netgain.toFixed(2) +'%';
+        document.getElementById('wp_item').textContent = min.item.toString().toUpperCase();
+        document.getElementById('wp_return').textContent = 'NET RETURN : ' + min.netgain.toFixed(2) +'%';
+        document.getElementById('bp_icon').src = "http://127.0.0.1:5000/fromapp/getItemLogo?item="+max.item;
+        document.getElementById('wp_icon').src = "http://127.0.0.1:5000/fromapp/getItemLogo?item="+min.item;
+        
     })
     .catch(error => {
         console.log(error);

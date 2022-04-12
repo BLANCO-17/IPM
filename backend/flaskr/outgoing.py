@@ -213,8 +213,8 @@ def getMonthlyData():
         # print(tradeObj.getAllTrades())
         data = tradeObj.getAllTrades()
         for x in data:
+            data[x]['cost'] *=  data[x]['shares']
             data[x]['gain'] = round((float(price_dict[item+'/'+cur]) * float(data[x]['shares'])) - float(data[x]['cost']), 2)
-            
             # data[x]['hodl'] = price_dict[item+'/'+cur] *  float(data[x]['shares'])
             # print(data[x])
             
@@ -285,7 +285,7 @@ def getItemLogo():
         'matic': 'polygon',
         'luna': 'terra',
         'dot': 'polkadot',
-        'xrp': 'ripple',
+        'xrp': 'xrp',
         'xlm': 'stellar',
         'vet': 'vechain',
         'hbar': 'hbar'

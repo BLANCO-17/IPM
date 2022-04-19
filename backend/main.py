@@ -3,4 +3,7 @@
 from flaskr import app
 
 if __name__ == "__main__":
-    app.run()
+    try:
+        app.run()
+    except Exception as msg:
+        print(msg)

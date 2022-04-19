@@ -138,6 +138,18 @@ window.onload = function(){
     let cbtn = document.getElementById('close_btn');
     cbtn.onclick = function winClose(){
         ipcRenderer.send('close-win');
+
+        fetch('http://127.0.0.1:5000/fromapp/system/quit', 
+        {
+            method: "POST",
+            headers: 
+            {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        }).then((response) => {
+            console.log("Closed App.");
+        })
+        
     }
 
     let maxbtn = document.getElementById('max_btn');

@@ -3,6 +3,8 @@ from flask import Blueprint, request, send_file
 from flaskr.tradeHandler import Trades, LoadAssetObject, LoadCryptoObject, LoadTradsObject
 from flaskr.scrapper import priceExtractor
 from datetime import date
+from os import _exit
+from time import sleep
 
 _TriggerCDS = False
 price_dict = {}
@@ -37,10 +39,24 @@ def calculate_details(tradeDict, item, cur):
                 
     return {"totalCost":round(totalCost, 2), "totalShares": totalShares, "hodlValue": round(hodlValue, 2), "netGain": round(netGain, 2), "Price": repPrice}#,netGain
 
+@bp.route('/system/quit', methods=['POST'])
+def system():
+    
+    global _TriggerCDS
+    
+    i=0
+    while i<100:
+        if _TriggerCDS != True:
+            _exit(0)
+        sleep(3)
+        i+=1
+            
+    print("PE too busy.")
+    return {"request": "failed"}
 
 @bp.route('/')
 def something():
-    return "outgoing stream"
+    return {"status": 200}
 
 @bp.route("/getItemList")
 def getItemList():
@@ -115,9 +131,11 @@ def getItemDetails():
 
 @bp.route('/getCardStructure')
 def getCardData():
-
-    if _TriggerCDS == False:
     
+    global _TriggerCDS
+    
+    if _TriggerCDS == False:
+        _TriggerCDS = True
         crypto = {}    
 
         pe = priceExtractor()
@@ -174,6 +192,7 @@ def getCardData():
             print("error [getCardData] -", e)
         finally:
             pe.closeDriver()
+            _TriggerCDS = False
         
         return {"ItemObject": crypto,
                 "request": 200}

@@ -2,17 +2,17 @@
 Final SEM Project 
 
 Splash
-<img src="https://imgur.com/81W0qqf" width="50%" height="50%">
+![Splash](https://imgur.com/81W0qqf "Splash")
 
 Dashboard
-<img src="https://imgur.com/UpcgD4Y" width="50%" height="50%">
+![Dashboard](https://imgur.com/UpcgD4Y "Dashboard")
 
 Portfolio
-<img src="https://imgur.com/WlAzIBV" width="50%" height="50%">
+![Portfolio](https://imgur.com/WlAzIBV "Portfolio")
 
 Add Item
-<img src="https://imgur.com/FFMiifG" width="50%" height="50%">
+![Add Item](https://imgur.com/FFMiifG "Add Item")
 
 Trades
-<img src="https://imgur.com/rZ8rJJ7" width="50%" height="50%">
-<img src="https://imgur.com/vmyTFEa" width="50%" height="50%">
+![T1](https://imgur.com/rZ8rJJ7 "T1")
+![T2](https://imgur.com/vmyTFEa "T2")

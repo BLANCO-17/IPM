@@ -2,10 +2,10 @@
 Final SEM Project 
 
 
-![Splash](https://imgur.com/81W0qqf)
+![splash](https://user-images.githubusercontent.com/58478133/165243073-034bddc5-9016-449f-9f02-7c24d0b9e85f.png)
 
-
-![Dashboard](https://imgur.com/UpcgD4Y)
+Dashboard
+![dash](https://user-images.githubusercontent.com/58478133/165243012-bb91a116-87d0-4131-ab00-dc88d92aec73.png)
 
 
 ![Portfolio](https://imgur.com/WlAzIBV)
